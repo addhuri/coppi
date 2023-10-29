@@ -33,4 +33,11 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ```bash
 # Create new project
 npx -p @angular/cli@16 ng new coppi
+ng generate environments
+# Install bootstrap
+ng add @ng-bootstrap/ng-bootstrap
+
+# Create new components
+ng generate component components/sidebar
+ng generate component components/home
 ```
