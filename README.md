@@ -28,6 +28,16 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
+## ToDos
+
+- [ ] Option to copy the workspace, page and section as a text
+- [ ] Download workspace and page as a JSON file
+  - [ ] with name and version
+  - [ ] download individual JSON files
+  - [ ] download all JSON files
+- [ ] To the same for uploading
+- [ ] Add dark theme
+
 ## Commands
 
 ```bash
@@ -36,8 +46,15 @@ npx -p @angular/cli@16 ng new coppi
 ng generate environments
 # Install bootstrap
 ng add @ng-bootstrap/ng-bootstrap
+npm i bootstrap-icons
+
+npm i @ngrx/store@16 --save
 
 # Create new components
 ng generate component components/sidebar
 ng generate component components/home
+ng generate component components/input-form
+ng generate component components/new-page-form
+
+ng generate service services/app
 ```

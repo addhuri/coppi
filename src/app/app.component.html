@@ -1,2 +1,23 @@
-
-<router-outlet></router-outlet>
+<div class="d-flex">
+    <div class="sidebar p-2">
+        <app-sidebar></app-sidebar>
+        <div class="d-flex gap-2 mt-2">
+            <button type="button" class="btn btn-sm btn-default" placement="end" popoverTitle="How to use?"
+                ngbPopover="Please check pages under 'Example Workspace'">
+                <i class="bi bi-question-circle"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-secondary" placement="end" popoverTitle="Note"
+                ngbPopover="This Web App won't save any data to server, so you can use it for temporary data. All this information is stored in your browser.">
+                <i class="bi bi-info-circle"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-danger" placement="end" popoverTitle="Disclaimer"
+                ngbPopover="Please don't use it for sensitive data, because it's not encrypted. And it's not recommended to use it for long term data, because it's not guaranteed to be saved forever.">
+                <i class="bi bi-exclamation-triangle"></i>
+            </button>
+        </div>
+    </div>
+    <div class="main-content p-2">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+<div class="text-muted text-center">Addhuri: All rights reserved &copy; 2023 Coppi</div>

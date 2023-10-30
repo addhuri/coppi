@@ -1,1 +1,10 @@
-<p>home works!</p>
+<div *ngFor="let section of sectionLineItems" class="d-flex flex-column gap-1">
+  <div *ngFor="let line of section">
+    <div class="d-flex flex-wrap justify-content-end gap-1">
+      <div *ngFor="let item of line">
+        <button class="btn btn-light btn-xs border" (click)="ut_action($event, item)">{{item}}</button>
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>

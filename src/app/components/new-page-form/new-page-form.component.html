@@ -1,0 +1,22 @@
+<form>
+    <div class="mb-3">
+        <label for="workspacename">Workspace Name</label>
+        <div class="input-group">
+            <input id="name" class="form-control" placeholder="Dev Space" name="workspacename"
+                [(ngModel)]="workspaceName" [disabled]="true" />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="pagename">Page Name</label>
+        <div class="input-group">
+            <input id="pagename" class="form-control" placeholder="Dev Page" name="pagename" [(ngModel)]="pageName" />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="textinput">Input <b class="text-danger">*</b> </label>
+        <div class="input-group">
+            <textarea id="textinput" class="form-control" [placeholder]="sampleText" name="textinput" rows="10"
+                [(ngModel)]="textInput"></textarea>
+        </div>
+    </div>
+</form>
