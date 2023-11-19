@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { AppService } from 'src/app/services/app.service';
 import { DeletePage, DeleteWorkspace } from 'src/app/store/app.actions';
 import { RootState, get_workspaces } from 'src/app/store/app.rootReducer';
@@ -12,13 +13,14 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
+  readonly subscription = new Subscription();
   readonly buildInfo = `Coppi\nVersion: ${environment.APP_VERSION}\nBuild: ${environment.APP_BUILD_DATE}`;
   treeNodes: any[] = [];
 
   constructor(private modalService: NgbModal, private appService: AppService, private store: Store<RootState>) { }
 
   ngOnInit(): void {
-    this.store.select(get_workspaces).subscribe(workspaces => {
+    this.subscription.add(this.store.select(get_workspaces).subscribe(workspaces => {
       this.appService.workspaces = workspaces;
       const tree = Object.values(workspaces).filter(w => w).map((workspace: any) => {
         const children = workspace ? Object.values(workspace.pages) : [];
@@ -28,7 +30,10 @@ export class SidebarComponent {
       });
       this.treeNodes = tree;
       this.checkAndAddExampleWorkspace(tree);
-    });
+    }));
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
   private checkAndAddExampleWorkspace(tree: Array<any>) {
     const exampleWorkspace = tree.find(workspace => workspace.name === 'Example Workspace');

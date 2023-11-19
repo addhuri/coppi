@@ -2,6 +2,8 @@ import { Action, ActionReducer, ActionReducerMap, createSelector, INIT, UPDATE }
 import { environment } from "src/environments/environment";
 import * as appReducer from './app.reducer';
 
+const STATE_KEY = "coppi";
+
 export interface RootState {
     app: appReducer.State
 }
@@ -16,17 +18,17 @@ export const metaReducerLocalStorage = (reducer: ActionReducer<any>): ActionRedu
             console.log("action", action);
         }
         if (action.type === INIT || action.type == UPDATE) {
-            const storageValue = localStorage.getItem("state");
+            const storageValue = localStorage.getItem(STATE_KEY);
             if (storageValue) {
                 try {
                     return JSON.parse(storageValue);
                 } catch {
-                    localStorage.removeItem("state");
+                    localStorage.removeItem(STATE_KEY);
                 }
             }
         }
         const nextState = reducer(state, action);
-        localStorage.setItem("state", JSON.stringify(nextState));
+        localStorage.setItem(STATE_KEY, JSON.stringify(nextState));
         return nextState;
     };
 };

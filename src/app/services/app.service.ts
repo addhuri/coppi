@@ -21,7 +21,7 @@ export class AppService {
     const sectionLines = sections.map(section => section.split("\n").filter(line => line.trim()));
     const sectionLineItems = sectionLines.map(section => {
       return section.map(line => {
-        return line.trim().split(",,").filter(i => i.trim());
+        return line.trim().split(",,").filter(i => i.trim()).map(i => i.replace(/\\n/g, "\n"));
       });
     });
     return sectionLineItems;

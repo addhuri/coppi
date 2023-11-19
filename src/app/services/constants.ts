@@ -22,6 +22,9 @@ You can seperate items in page by using double comma (, ,) like below
 Extra small,, Small,, Medium,, Large,, Extra Large
 You can add multiple sections in a page, by adding three hyphens (- - -) in between sections
 ---
+Now there is a support for new line as well, you can use "\\ n" (slash n) to add new line, like below
+some other words,,git status\\ngit remote update
+---
 Currently you can't edit the name of a workspace or page, but you can delete them
 You can delete a workspace, by clicking on the 'Delete' button in the sidebar
 ---

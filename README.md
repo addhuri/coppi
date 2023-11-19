@@ -1,6 +1,12 @@
 # Coppi
 
+![Coppi Web App Logo](src/assets/favicon-32x32.png)
+
 A tool to quickly Copy (Coppi) your text to clipboard on one click
+
+## Demo
+
+Live demo: [https://addhuri.com/coppi](https://addhuri.com/coppi)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.8.
 
@@ -36,7 +42,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
   - [ ] download individual JSON files
   - [ ] download all JSON files
 - [ ] To the same for uploading
-- [ ] Add dark theme
+- [x] Add dark theme
+- [x] Add support for new line \n
 
 ## Commands
 

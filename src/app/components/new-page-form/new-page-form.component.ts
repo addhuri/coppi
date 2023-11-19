@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { AppService } from 'src/app/services/app.service';
 import { GreyPageText } from 'src/app/services/constants';
 import { RootState } from 'src/app/store/app.rootReducer';
@@ -10,6 +11,7 @@ import { RootState } from 'src/app/store/app.rootReducer';
   styleUrls: ['./new-page-form.component.scss']
 })
 export class NewPageFormComponent {
+  readonly subscription = new Subscription();
   readonly sampleText = GreyPageText;
   workspaceName: string = '';
   pageName: string = '';
@@ -19,9 +21,12 @@ export class NewPageFormComponent {
 
   ngOnInit(): void {
     this.workspaceName = this.appService.workspaces[this.appService.newPage.workspaceId]?.name || '';
-    this.appService.savePageEventEmitter.subscribe(() => {
+    this.subscription.add(this.appService.savePageEventEmitter.subscribe(() => {
       this.save();
-    });
+    }));
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
   private save() {
     this.textInput = this.textInput.trim();

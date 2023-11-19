@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { AppService } from 'src/app/services/app.service';
 import { EmptyPage, GreyPageText, WhitePageText } from 'src/app/services/constants';
 import { RootState, get_workspaces } from 'src/app/store/app.rootReducer';
@@ -11,6 +12,7 @@ import { RootState, get_workspaces } from 'src/app/store/app.rootReducer';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+  readonly subscription = new Subscription();
   sectionLineItems = this.appService.parseText(WhitePageText);
   // sectionLineItems = this.appService.parseText(GreyPageText);
   workspaces: any = {}
@@ -21,12 +23,12 @@ export class HomeComponent {
   constructor(private appService: AppService, private store: Store<RootState>, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.store.select(get_workspaces).subscribe(workspaces => {
+    this.subscription.add(this.store.select(get_workspaces).subscribe(workspaces => {
       this.workspaces = workspaces;
       this.updateView(); // to update on CRUD operations
-    });
+    }));
 
-    this.activatedRoute.params.subscribe((params: Params) => {
+    this.subscription.add(this.activatedRoute.params.subscribe((params: Params) => {
       const { workspaceId, pageId } = params;
       if (workspaceId && pageId) {
         this.workspaceId = workspaceId;
@@ -35,7 +37,10 @@ export class HomeComponent {
       } else {
         this.sectionLineItems = EmptyPage;
       }
-    });
+    }));
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
   private updateView() {
     if (this.workspaceId && this.pageId) {

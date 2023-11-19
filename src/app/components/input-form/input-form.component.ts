@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { AppService } from 'src/app/services/app.service';
 import { WhitePageText } from 'src/app/services/constants';
 import { RootState } from 'src/app/store/app.rootReducer';
@@ -10,6 +11,7 @@ import { RootState } from 'src/app/store/app.rootReducer';
   styleUrls: ['./input-form.component.scss']
 })
 export class InputFormComponent {
+  readonly subscription = new Subscription();
   readonly sampleText = WhitePageText;
   workspaceName: string = '';
   pageName: string = '';
@@ -18,9 +20,12 @@ export class InputFormComponent {
   constructor(private appService: AppService, private store: Store<RootState>) { }
 
   ngOnInit(): void {
-    this.appService.saveEventEmitter.subscribe(() => {
+    this.subscription.add(this.appService.saveEventEmitter.subscribe(() => {
       this.save();
-    });
+    }));
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
   private save() {
     this.workspaceName = this.workspaceName.trim();
