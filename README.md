@@ -62,6 +62,7 @@ ng generate component components/sidebar
 ng generate component components/home
 ng generate component components/input-form
 ng generate component components/new-page-form
+ng generate c components/new-workspace-form
 
 ng generate service services/app
 ```

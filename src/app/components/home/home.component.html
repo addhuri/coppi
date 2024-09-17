@@ -2,7 +2,7 @@
   <div *ngFor="let line of section">
     <div class="d-flex flex-wrap justify-content-end gap-1">
       <div *ngFor="let item of line">
-        <button class="btn btn-outline-default btn-xs border item-button"
+        <button class="btn btn-outline-primary btn-custom item-button"
           (click)="ut_action($event, item)">{{item}}</button>
       </div>
     </div>

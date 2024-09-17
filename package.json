@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "s": "ng serve -o --port 5000",
     "start": "ng serve",
     "build": "ng build",
+    "b": "ng build --base-href=/coppi/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

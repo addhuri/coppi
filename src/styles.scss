@@ -6,3 +6,8 @@
 .s8 {
     scale: 0.8;
 }
+
+.btn-custom {
+    --bs-btn-color: var(--bs-body-color);
+    --bs-btn-border-color: var(--bs-border-color);
+}
