@@ -35,7 +35,7 @@ export class InputFormComponent {
       alert('Text input is empty');
       return;
     }
-    const data = this.appService.parseText(this.textInput);
+    const data = this.appService.parseTextToData(this.textInput);
     this.appService.newWorkspace(this.workspaceName, this.pageName, data);
   }
 }

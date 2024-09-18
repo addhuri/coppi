@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { Workspaces } from 'src/app/services/app.interface';
 import { AppService } from 'src/app/services/app.service';
 import { EmptyPage, GreyPageText, WhitePageText } from 'src/app/services/constants';
 import { RootState, get_workspaces } from 'src/app/store/app.rootReducer';
@@ -13,9 +14,9 @@ import { RootState, get_workspaces } from 'src/app/store/app.rootReducer';
 })
 export class HomeComponent {
   readonly subscription = new Subscription();
-  sectionLineItems = this.appService.parseText(WhitePageText);
-  // sectionLineItems = this.appService.parseText(GreyPageText);
-  workspaces: any = {}
+  sectionLineItems = this.appService.parseTextToData(WhitePageText);
+  // sectionLineItems = this.appService.parseTextToData(GreyPageText);
+  workspaces: Workspaces = {}
   workspaceId: string = '';
   pageId: string = '';
 

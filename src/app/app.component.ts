@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'coppi';
+  readonly currentYear = new Date().getFullYear();
+
   constructor() {
     if (localStorage.getItem('theme') === 'light') {
       this.theme('light');

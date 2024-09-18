@@ -16,7 +16,7 @@
         <div class="d-flex align-items-center w-100">
             <span class="mb-1"><i class="bi bi-person-workspace"></i> {{node.name}}</span>
             <button type="button" class="btn btn-outline-primary btn-custom btn-sm border-0 ms-auto"
-                title="Add new Page" (click)="ut_open(newPageModal, node.id)">
+                title="Add new Page" (click)="ut_action(PageMode.NEW, node, null, newPageModal)">
                 <i class="bi bi-file-plus"></i></button>
             <button type="button" class="btn btn-outline-danger btn-custom btn-sm border-0" title="Delete Workspace"
                 (click)="ut_deleteWorkspace(node.id)">
@@ -27,9 +27,25 @@
                 [routerLink]="node.id+'/'+child.id" *ngFor="let child of node.children">
                 <div class="d-flex w-100 align-items-center justify-content-between">
                     <span><i class="bi bi-file-earmark"></i> {{child.name}}</span>
-                    <button type="button" class="btn btn-danger btn-sm s8" title="Delete Workspace"
+                    <!-- <button type="button" class="btn btn-danger btn-sm s8" title="Delete Workspace"
                         (click)="ut_deletePage(node.id, child.id)">
-                        <i class="bi bi-trash"></i></button>
+                        <i class="bi bi-trash"></i></button> -->
+                    <div ngbDropdown class="d-inline-block">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" ngbDropdownToggle
+                            (click)="ut_dropdown($event)">
+                            <!-- <i class="bi bi-three-dots-vertical"></i> -->
+                        </button>
+                        <div ngbDropdownMenu>
+                            <button ngbDropdownItem (click)="ut_action(PageMode.VIEW, node, child, newPageModal)">
+                                <i class="bi bi-view-list me-2"></i> View</button>
+                            <button ngbDropdownItem (click)="ut_action(PageMode.EDIT, node, child, newPageModal)">
+                                <i class="bi bi-pencil-square me-2"></i> Edit</button>
+                            <button ngbDropdownItem (click)="ut_action(PageMode.DUPLICATE, node, child, newPageModal)">
+                                <i class="bi bi-files me-2"></i> Duplicate</button>
+                            <button ngbDropdownItem (click)="ut_action(PageMode.DELETE, node, child, newPageModal)">
+                                <i class="bi bi-trash me-2"></i> Delete Page</button>
+                        </div>
+                    </div>
                 </div>
             </button>
         </ul>
@@ -51,13 +67,16 @@
 
 <ng-template #newPageModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Create new page</h4>
+        <h4 class="modal-title">{{pageModalTitle}}</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
     </div>
     <div class="modal-body">
         <app-new-page-form></app-new-page-form>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline-primary" (click)="ut_addNewPage()">Save</button>
+    <div class="modal-footer" *ngIf="appService.currentPageMode != PageMode.VIEW">
+        <button *ngIf="appService.currentPageMode==PageMode.NEW" type="button" class="btn btn-outline-primary"
+            (click)="ut_addNewPage()">Save</button>
+        <button *ngIf="appService.currentPageMode==PageMode.EDIT" type="button" class="btn btn-outline-primary"
+            (click)="ut_updatePage()">Update</button>
     </div>
 </ng-template>

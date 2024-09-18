@@ -1,8 +1,9 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { CreatePage, CreateWorkspace, DeletePage, DeleteWorkspace } from './app.actions';
+import { CreatePage, CreateWorkspace, DeletePage, DeleteWorkspace, UpdatePage } from './app.actions';
+import { Page, Workspace, Workspaces } from '../services/app.interface';
 
 export interface State {
-    workspaces: { [s: string]: any };
+    workspaces: { [s: string]: Workspace };
 }
 
 const initialState: State = {
@@ -11,10 +12,11 @@ const initialState: State = {
 
 const _appReducer = createReducer(
     initialState,
-    on(CreateWorkspace, (state: State, action: any) => ({ ...state, workspaces: updatedWorkspaces(state.workspaces, action.workspace) })),
-    on(CreatePage, (state: State, action: any) => ({ ...state, workspaces: updatedPages(state.workspaces, action) })),
-    on(DeleteWorkspace, (state: State, action: any) => ({ ...state, workspaces: { ...state.workspaces, [action.id]: undefined } })),
-    on(DeletePage, (state: State, action: any) => ({ ...state, workspaces: onDeletePage(state.workspaces, action) })),
+    on(CreateWorkspace, (state: State, action) => ({ ...state, workspaces: updatedWorkspaces(state.workspaces, action.workspace) })),
+    on(CreatePage, (state: State, action) => ({ ...state, workspaces: updatePage(state.workspaces, action.workspaceId, action.page) })),
+    on(UpdatePage, (state: State, action) => ({ ...state, workspaces: updatePage(state.workspaces, action.workspaceId, action.page, action.workspaceName) })),
+    on(DeleteWorkspace, (state: State, action) => ({ ...state, workspaces: onDeleteWorkspace(state.workspaces, action.id) })),
+    on(DeletePage, (state: State, action) => ({ ...state, workspaces: onDeletePage(state.workspaces, action.workspaceId, action.pageId) })),
 );
 
 export function appReducer(state: State | undefined, action: Action) {
@@ -26,18 +28,23 @@ export const appSelectors = {
 }
 
 
-function updatedWorkspaces(workspaces: any, workspace: any) {
-    return { ...workspaces, [workspace.id]: workspace };
+function updatedWorkspaces(ws: Workspaces, workspace: Workspace) {
+    return { ...ws, [workspace.id]: workspace };
 }
-function updatedPages(ws: any, action: any) {
+function updatePage(ws: Workspaces, workspaceId: number, page: Page, workspaceName: string = '') {
     const workspaces = { ...ws };
-    const pages = { ...workspaces[action.workspaceId].pages };
-    pages[action.page.id] = action.page;
-    return { ...workspaces, [action.workspaceId]: { ...workspaces[action.workspaceId], pages } };
+    const pages = { ...workspaces[workspaceId].pages };
+    pages[page.id] = page;
+    return { ...workspaces, [workspaceId]: { ...workspaces[workspaceId], pages, name: workspaceName } };
 }
-function onDeletePage(ws: any, actions: any) {
+function onDeleteWorkspace(ws: Workspaces, id: number) {
+    const workspaces = { ...ws };
+    delete workspaces[id];
+    return workspaces;
+}
+function onDeletePage(ws: Workspaces, workspaceId: number, pageId: number) {
     var workspaces = { ...ws };
-    var pages = { ...workspaces[actions.workspaceId].pages };
-    delete pages[actions.pageId];
-    return { ...workspaces, [actions.workspaceId]: { ...workspaces[actions.workspaceId], pages } };
+    var pages = { ...workspaces[workspaceId].pages };
+    delete pages[pageId];
+    return { ...workspaces, [workspaceId]: { ...workspaces[workspaceId], pages } };
 }
