@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootState } from '../store/app.rootReducer';
-import { CreatePage, CreateWorkspace, UpdatePage } from '../store/app.actions';
+import { CreatePage, CreateWorkspace, ToggleSidebar, UpdatePage } from '../store/app.actions';
 import { GreyPageText, WhitePageText } from './constants';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Page, PageData, PageMode, Workspace, Workspaces } from './app.interface';
@@ -15,8 +15,15 @@ export class AppService {
   workspaces: Workspaces = {};
   newPage = { workspaceId: 0, pageId: 0 };
   currentPageMode = PageMode.VIEW;
+  isVisibleSidebar = true;
 
-  constructor(private store: Store<RootState>, private modalService: NgbModal) { }
+  constructor(private store: Store<RootState>, private modalService: NgbModal) {
+    if (localStorage.getItem('theme') === 'light') {
+      this.changeTheme('light');
+    } else {
+      this.changeTheme('dark');
+    }
+  }
 
   parseTextToData(text: string) {
     const sections = text.split("---");
@@ -97,5 +104,13 @@ export class AppService {
       }
     ];
     this.newWorkspaceMultiplePages(workspaceName, pages);
+  }
+
+  changeTheme(mode: 'light' | 'dark') {
+    document.body.setAttribute('data-bs-theme', mode);
+    localStorage.setItem('theme', mode);
+  }
+  ut_toggleSidebar() {
+    this.store.dispatch(ToggleSidebar());
   }
 }

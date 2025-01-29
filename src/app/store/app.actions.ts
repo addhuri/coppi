@@ -7,6 +7,7 @@ export enum appActionTypes {
   UPDATE_PAGE = '[App] UpdatePage',
   DELETE_WORKSPACE = '[App] DeleteWorkspace',
   DELETE_PAGE = '[App] DeletePage',
+  TOGGLE_SIDEBAR = '[App] ToggleSidebar'
 }
 
 export const CreateWorkspace = createAction(appActionTypes.CREATE_WORKSPACE, (workspace: Workspace) => ({ workspace }));
@@ -14,3 +15,4 @@ export const CreatePage = createAction(appActionTypes.CREATE_PAGE, (workspaceId:
 export const UpdatePage = createAction(appActionTypes.UPDATE_PAGE, (workspaceId: number, workspaceName: string, page: Page) => ({ workspaceId, workspaceName, page }));
 export const DeleteWorkspace = createAction(appActionTypes.DELETE_WORKSPACE, (id: number) => ({ id }));
 export const DeletePage = createAction(appActionTypes.DELETE_PAGE, (workspaceId: number, pageId: number) => ({ workspaceId, pageId }));
+export const ToggleSidebar = createAction(appActionTypes.TOGGLE_SIDEBAR);

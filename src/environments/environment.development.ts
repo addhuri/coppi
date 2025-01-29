@@ -1,5 +1,5 @@
 export const environment = {
     production: false,
-    APP_VERSION: "1.2",
-    APP_BUILD_DATE: '2024-09-15T12:30:00.000Z'
+    APP_VERSION: "1.3",
+    APP_BUILD_DATE: '2025-01-28T12:30:00.000Z'
 };

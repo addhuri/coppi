@@ -1,9 +1,11 @@
 .sidebar {
     width: 20%;
-    border-right: 1px solid #aaa;
-    min-height: 96vh;
+    border-right: 1px solid #666;
+    height: 100vh;
+    position: fixed;
 }
 
 .main-content {
     width: 80%;
+    margin-left: auto;
 }

@@ -1,29 +1,20 @@
+<div *ngIf="!appService.isVisibleSidebar" class="d-flex flex-wrap align-items-center p-2 gap-2">
+    <button type="button" class="btn py-0 px-2" title="Expand Sidebar" (click)="appService.ut_toggleSidebar()">
+        <i class="bi bi-list fs-5"></i>
+    </button>
+    <a routerLink="/">
+        <label [title]="buildInfo">
+            <img src="assets/android-chrome-192x192.png" width="32" alt="Coppi: Copy text to Clipboard" title="Coppi">
+            <span class="ms-2 fw-bold">Coppi</span>
+        </label>
+    </a>
+</div>
 <div class="d-flex">
-    <div class="sidebar p-2">
+    <div *ngIf="appService.isVisibleSidebar" class="sidebar p-2">
         <app-sidebar></app-sidebar>
-        <div class="d-flex gap-2 mt-2">
-            <button type="button" class="btn btn-sm btn-outline-primary btn-custom" placement="end"
-                popoverTitle="How to use?" ngbPopover="Please check pages under 'Example Workspace'">
-                <i class="bi bi-question-circle"></i>
-            </button>
-            <button type="button" class="btn btn-sm btn-secondary" placement="end" popoverTitle="Note"
-                ngbPopover="This Web App won't save any data to server, so you can use it for temporary data. All this information is stored in your browser.">
-                <i class="bi bi-info-circle"></i>
-            </button>
-            <button type="button" class="btn btn-sm btn-danger" placement="end" popoverTitle="Disclaimer"
-                ngbPopover="Please don't use it for sensitive data, because it's not encrypted. And it's not recommended to use it for long term data, because it's not guaranteed to be saved forever.">
-                <i class="bi bi-exclamation-triangle"></i>
-            </button>
-        </div>
-        <div class="d-flex gap-2 mt-2">
-            <button type="button" class="btn btn-sm btn-outline-primary btn-custom" (click)="theme('light')"><i
-                    class="bi bi-sun"></i> Light</button>
-            <button type="button" class="btn btn-sm btn-outline-primary btn-custom" (click)="theme('dark')"><i
-                    class="bi bi-moon"></i> Dark</button>
-        </div>
     </div>
-    <div class="main-content p-2">
+    <div class="main-content p-2" [ngClass]="{'w-100': !appService.isVisibleSidebar}">
         <router-outlet></router-outlet>
     </div>
 </div>
-<div class="text-muted text-center">Addhuri: All rights reserved &copy; {{currentYear}} Coppi</div>
+<div class="text-muted text-center my-3">Addhuri: All rights reserved &copy; {{currentYear}} Coppi</div>

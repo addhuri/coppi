@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AppService } from './services/app.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -8,16 +10,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'coppi';
   readonly currentYear = new Date().getFullYear();
+  readonly buildInfo = `Coppi\nVersion: ${environment.APP_VERSION}\nBuild: ${environment.APP_BUILD_DATE}`;
 
-  constructor() {
-    if (localStorage.getItem('theme') === 'light') {
-      this.theme('light');
-    } else {
-      this.theme('dark');
-    }
-  }
-  theme(mode: string) {
-    document.body.setAttribute('data-bs-theme', mode);
-    localStorage.setItem('theme', mode);
-  }
+  constructor(public appService: AppService) { }
 }

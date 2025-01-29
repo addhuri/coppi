@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { Workspaces } from 'src/app/services/app.interface';
 import { AppService } from 'src/app/services/app.service';
 import { EmptyPage, GreyPageText, WhitePageText } from 'src/app/services/constants';
-import { RootState, get_workspaces } from 'src/app/store/app.rootReducer';
+import { RootState, get_isVisibleSidebar, get_workspaces } from 'src/app/store/app.rootReducer';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +27,9 @@ export class HomeComponent {
     this.subscription.add(this.store.select(get_workspaces).subscribe(workspaces => {
       this.workspaces = workspaces;
       this.updateView(); // to update on CRUD operations
+    }));
+    this.subscription.add(this.store.select(get_isVisibleSidebar).subscribe(val => {
+      this.appService.isVisibleSidebar = val == undefined ? true : val;
     }));
 
     this.subscription.add(this.activatedRoute.params.subscribe((params: Params) => {

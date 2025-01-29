@@ -34,3 +34,4 @@ export const metaReducerLocalStorage = (reducer: ActionReducer<any>): ActionRedu
 };
 
 export const get_workspaces = createSelector(getAppState, appReducer.appSelectors.get_workspaces);
+export const get_isVisibleSidebar = createSelector(getAppState, appReducer.appSelectors.get_isVisibleSidebar);

@@ -1,13 +1,15 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { CreatePage, CreateWorkspace, DeletePage, DeleteWorkspace, UpdatePage } from './app.actions';
+import { CreatePage, CreateWorkspace, DeletePage, DeleteWorkspace, ToggleSidebar, UpdatePage } from './app.actions';
 import { Page, Workspace, Workspaces } from '../services/app.interface';
 
 export interface State {
     workspaces: { [s: string]: Workspace };
+    isVisibleSidebar: boolean;
 }
 
 const initialState: State = {
-    workspaces: {}
+    workspaces: {},
+    isVisibleSidebar: true
 };
 
 const _appReducer = createReducer(
@@ -17,6 +19,7 @@ const _appReducer = createReducer(
     on(UpdatePage, (state: State, action) => ({ ...state, workspaces: updatePage(state.workspaces, action.workspaceId, action.page, action.workspaceName) })),
     on(DeleteWorkspace, (state: State, action) => ({ ...state, workspaces: onDeleteWorkspace(state.workspaces, action.id) })),
     on(DeletePage, (state: State, action) => ({ ...state, workspaces: onDeletePage(state.workspaces, action.workspaceId, action.pageId) })),
+    on(ToggleSidebar, (state: State) => ({ ...state, isVisibleSidebar: !state.isVisibleSidebar }))
 );
 
 export function appReducer(state: State | undefined, action: Action) {
@@ -24,7 +27,8 @@ export function appReducer(state: State | undefined, action: Action) {
 }
 
 export const appSelectors = {
-    get_workspaces: (state: State) => state.workspaces
+    get_workspaces: (state: State) => state.workspaces,
+    get_isVisibleSidebar: (state: State) => state.isVisibleSidebar
 }
 
 
